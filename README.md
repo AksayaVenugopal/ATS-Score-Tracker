@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/930aa159-6944-412e-b82b-ad449c2e75bc)
+
 ![image](https://github.com/user-attachments/assets/04cdd5b8-93be-4bbc-9914-aece386e1ae9)
 
 ATS Resume Scorer
