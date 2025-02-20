@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redefine</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #1c1c1c, #383838);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            flex-direction: column;
+            text-align: center;
+            animation: backgroundAnimation 5s infinite alternate;
+            overflow: hidden;
+        }
+
+        /* Main Container */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            position: relative;
+            margin-top: 20px;
+            animation: containerAnimation 3s ease-out forwards;
+        }
+
+        /* Left-side Glowing Redefine Text */
+        .redefine {
+            font-size: 6rem;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            animation: textAnimation 2s ease-out 1s forwards;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        }
+
+        .redefine .period {
+            color: #ff4c4c;
+            animation: glow 2s infinite;
+        }
+
+        /* Right-side Tagline */
+        .tagline {
+            font-size: 2.5rem;
+            font-weight: 300;
+            text-align: left;
+            margin-left: 30px;
+            max-width: 600px;
+            animation: fadeIn 2s ease-out 2s forwards;
+            color: #f5f5f5;
+        }
+
+        .tagline span {
+            color: #ff4c4c;
+            font-weight: bold;
+            font-size: 3rem;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        /* Buttons */
+        .button-container {
+            margin-top: 50px;
+            opacity: 0;
+            animation: fadeIn 2s ease-out 3s forwards;
+            position: absolute;
+            bottom: 50px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .button {
+            text-decoration: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            color: white;
+            background: #ff4c4c;
+            border-radius: 50px;
+            margin: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 10px 20px rgba(255, 76, 76, 0.3);
+            animation: buttonAnimation 3s ease-out forwards;
+        }
+
+        /* Hover effect */
+        .button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 25px rgba(255, 76, 76, 0.5);
+            background-color: #ff6b6b;
+        }
+
+        .button:active {
+            transform: scale(1.05);
+        }
+
+        /* Keyframe Animations */
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 
+                             0 0 40px rgba(255, 255, 255, 0.6), 
+                             0 0 80px rgba(255, 76, 76, 0.8);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(255, 255, 255, 1), 
+                             0 0 60px rgba(255, 76, 76, 0.9), 
+                             0 0 100px rgba(255, 76, 76, 1);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Animating the 'redefine' text */
+        @keyframes textAnimation {
+            0% {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Animating the container */
+        @keyframes containerAnimation {
+            0% {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Button Animation */
+        @keyframes buttonAnimation {
+            0% {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left-side Glowing Redefine Text -->
+        <div class="redefine">
+            UPGRADE<span class="period">.</span>
+        </div>
+        
+        <!-- Right-side Tagline -->
+        <div class="tagline">
+            Still stuck manually updating your resume? Sit back, relax, and let me <span>auto-magically</span> upgrade it—ATS score included!
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="button-container">
+        <a href="/ats-score" class="button">Check ATS Score</a>
+        <a href="/download" class="button">Download App</a>
+    </div>
+</body>
+</html>

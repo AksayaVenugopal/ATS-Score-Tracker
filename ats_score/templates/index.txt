@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Resume Score</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2c2f36; /* Dark grey background */
+            color: #f4f4f4; /* Light grey text */
+        }
+
+        h1 {
+            color: #ff4d4d; /* Red color for the heading */
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .form-container {
+            margin: 0 auto;
+            width: 80%;
+            max-width: 600px;
+            background-color: #3a3f47; /* Slightly lighter grey for contrast */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        textarea {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: #fff;
+            resize: vertical;
+        }
+
+        button {
+            padding: 12px 24px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff1a1a;
+        }
+
+        button:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+
+        #ats-graph {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .loading {
+            display: none;
+            color: #ff4d4d;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .error {
+            color: #ff4d4d;
+            font-size: 16px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        iframe {
+            border-radius: 10px;
+            border: none;
+            transition: transform 0.3s;
+        }
+
+        iframe:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <h1>ATS Resume Score</h1>
+    <div class="form-container">
+        <form id="ats-form">
+            <textarea name="resume" rows="10" placeholder="Paste your LaTeX resume code here"></textarea>
+            <textarea name="job_description" rows="10" placeholder="Paste your job description here"></textarea>
+            <button type="submit">Calculate ATS Score</button>
+            <p class="loading">Calculating your ATS score, please wait...</p>
+        </form>
+    </div>
+
+    <!-- Div to display the Plotly graph -->
+    <div id="ats-graph"></div>
+
+    <!-- Placeholder for error messages -->
+    <div class="error" id="error-message"></div>
+
+    <script>
+        document.getElementById("ats-form").onsubmit = async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const button = e.target.querySelector("button");
+            const loadingMessage = document.querySelector(".loading");
+            const errorMessage = document.getElementById("error-message");
+            const resultDiv = document.getElementById("ats-graph");
+
+            // Reset previous states
+            button.disabled = true;
+            loadingMessage.style.display = "block";
+            errorMessage.textContent = "";
+            resultDiv.innerHTML = "";
+
+            try {
+                const response = await fetch("/ats-score", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Display the Plotly graph
+                    if (result.graph_html) {
+                        resultDiv.innerHTML = result.graph_html;
+                    } else {
+                        resultDiv.innerHTML = "<p>No graph available.</p>";
+                    }
+                } else {
+                    // Display error message from server
+                    errorMessage.textContent = result.error || "An error occurred.";
+                }
+            } catch (error) {
+                // Handle fetch or network errors
+                errorMessage.textContent = "Failed to calculate ATS score. Please try again.";
+            } finally {
+                // Reset button and loading message
+                button.disabled = false;
+                loadingMessage.style.display = "none";
+            }
+        };
+    </script>
+</body>
+</html>
